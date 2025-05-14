@@ -42,12 +42,51 @@
         </div>
     </div>
 <script>
+    let isMouseDown = false;
+    let idx = 2;
+
+    const colsSurfaces = [
+        '#0f0',         //Inicio
+        '#f00',         //Fin
+        '#7A420D',      //Tierra
+        '#0000FF',      //Agua
+        '#444'          //Pared
+    ];
+
+    document.addEventListener('mouseup', (e) => {
+       isMouseDown = false;
+    });
+
+    document.querySelectorAll('#tablero .celda')
+        .forEach( celda => {
+            celda.addEventListener('mousedown', (e) => {
+                // console.log('mousedown');
+                isMouseDown = true;
+                pintarCelda(celda);
+            });
+            celda.addEventListener('mouseover', (e) => {
+                // console.log('mouseover');
+                if (isMouseDown) {
+                    pintarCelda(celda);
+                }
+            });
+            celda.addEventListener('mouseup', (e) => {
+                // console.log('mouseup');
+                isMouseDown = false;
+            });
+        });
+
+    function pintarCelda(celda) {
+        celda.style.backgroundColor = colsSurfaces[idx];
+    }
+
     function elegirPintura(elemento, superficie, indice) {
         document.querySelectorAll('.pintura')
             .forEach(celda => {
                celda.classList.remove('selected');
             });
         elemento.classList.add('selected');
+        idx = indice;
     }
 </script>
 </body>
